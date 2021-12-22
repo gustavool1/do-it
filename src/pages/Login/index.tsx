@@ -5,7 +5,10 @@ import { FaEnvelope, FaLock } from "react-icons/fa"
 import { useForm } from "react-hook-form"
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { AuthContext, useAuth } from "../../providers/Auth"
+import { LoginInfo } from "./LoginInfo"
+import { LoginForm } from "./LoginForm"
 
 interface SignInInterface{
     email:string,
@@ -13,6 +16,7 @@ interface SignInInterface{
 }
 export const Login = () =>{
     
+    const { signIn } = useContext(AuthContext)
     const [ loading, setLoading ] = useState(false)
 
     const signInSchema = yup.object().shape({
@@ -27,63 +31,35 @@ export const Login = () =>{
 
 
     const handleSignIn = (data:SignInInterface) =>{
-        console.log(data)
+        setLoading(true)
+        const { email, password } = data
+        signIn({email, password})   
+        .then(()=> setLoading(false))
+         .catch(()=> setLoading(false))
     }
 
 
     return(
         <Flex 
-            padding="10px 15px"
-            alignItems="center"
-            height="100vh"
-            bgGradient='linear(to-r, purple.800 65%, white 35%)'
+            padding = { ["10px 15px", "10px 15px", "0px", "0px"] }
+            height={["auto", "auto", "100vh", "100vh" ]}
+            justifyContent="center"
+            bgGradient={[
+                    "linear(to-b, purple.800 65%, white 35%)",
+                    "linear(to-b, purple.800 65%, white 35%)",
+                    "linear(to-r, purple.800 65%, white 35%)",
+                    'linear(to-r, purple.800 65%, white 35%)'
+            ]}
             color="white"
             >
             <Flex 
-                w="100%" 
+                w={["100%", "100%", "90%", "55%"]}
                 justifyContent="center" 
-                flexDirection="row"
+                flexDirection={["column", "column", "row", "row" ]}
                 alignItems="center"
             > 
-                <Grid 
-                    w="100%"
-                    paddingRight="100px"
-                >
-                    <Image src={LogoSecondary} alt="doitLogo" boxSize="120px"/>
-                    <Heading as="h1"> O jeito fácil, gratis</Heading>
-                    <Text>Flexivel e atrativo de gerenciar <b>seus projetos em uma única plataforma</b></Text>
-                </Grid>
-                <Grid as="form"
-                    onSubmit={handleSubmit(handleSignIn)}
-                    mt="4"
-                    w="50%"
-                    padding="30px 15px"
-                    border="3px solid"
-                    borderColor="gray.100"
-                    bg="white"
-                    color="gray.900"
-                >
-                    <Heading size="lg"> Bem vindo de de volta</Heading>
-                    <VStack mt="5" spacing="5">
-                        <Box w="100%">
-                            <Input   placeholder="Digite seu login" type="email" icon={ FaEnvelope } { ...register("email") } error={ errors.email }/>
-                            {!errors.email && (
-                                <Text ml="1" mt="1" color="gray.300">Exemplo: nome@email.com</Text>
-                            )}
-                        </Box>
-                        <Box w="100%">
-                            <Input   placeholder="Digite sua senha" type="password" icon={ FaLock } { ...register("password") } error={ errors.password }/>
-                            {!errors.password && (
-                                <Text ml="1" mt="1" color="gray.300">Exemplo: nome@email.com</Text>
-                            )}
-                        </Box>
-                    </VStack>
-                    <VStack mt="4" spacing="5">
-                        <Button  isLoading={loading} type="submit" bg="purple.800" w="100%" color="white" h="60px" borderRadius="8px" _hover={{background:"purple.900"}}>Entrar</Button>
-                        <Text color="gray.400">Ainda não possui uma conta ? </Text>
-                        <Button  type="submit" bg="gray.100" w="100%" color="gray.300" h="60px" borderRadius="8px" _hover={{background:"gray.200"}}>Cadastrar</Button>
-                    </VStack>
-                </Grid>
+               <LoginInfo/>
+                <LoginForm errors={errors} handleSignIn={handleSubmit(handleSignIn)} loading={loading} register={register} />
             </Flex>
         </Flex>
     )

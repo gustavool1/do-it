@@ -1,12 +1,9 @@
-import { Box, Button, Flex, Grid, Heading, Image, Text, VStack } from "@chakra-ui/react"
-import LogoSecondary from "../../assets/logo-primary.svg"
-import  { Input }  from "../../components/Form/Input"
-import { FaEnvelope, FaLock } from "react-icons/fa"
+import { Flex } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useContext, useState } from "react"
-import { AuthContext, useAuth } from "../../providers/Auth"
+import { AuthContext } from "../../providers/Auth"
 import { LoginInfo } from "./LoginInfo"
 import { LoginForm } from "./LoginForm"
 

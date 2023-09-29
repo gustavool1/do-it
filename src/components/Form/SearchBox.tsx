@@ -16,7 +16,7 @@ export const SearchBox = () =>{
     const { isOpen, onClose, onOpen } = useDisclosure()
     const {register, handleSubmit } = useForm()
 
-    const { searchTask, notFound, taskNotFound } = useContext(TaskContext)
+    const { searchTask } = useContext(TaskContext)
     const { acessToken } = useContext(AuthContext)
 
 

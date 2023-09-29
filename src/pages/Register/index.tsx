@@ -1,11 +1,8 @@
-import { Box, Button, Flex, Grid, Heading, Image, Text, useBreakpointValue, useDisclosure, VStack } from "@chakra-ui/react"
-import LogoSecondary from "../../assets/logo-primary.svg"
-import  { Input }  from "../../components/Form/Input"
+import { Flex, useBreakpointValue, useDisclosure } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useContext, useState } from "react"
-import { AuthContext, useAuth } from "../../providers/Auth"
+import { useState } from "react"
 import { RegisterInfo } from "./RegisterInfo"
 import { RegisterForm } from "./RegisterForm"
 import { GoBackButton } from "./GoBackButton"
@@ -46,14 +43,15 @@ export const Register = () =>{
     const { isOpen:isModalSuccessOpen, onOpen:onModalSuccessOpen, onClose:onModalSuccessClose } = useDisclosure()
     const { isOpen:isModalErrorOpen, onOpen:onModalErrorOpen, onClose:onModalErrorClose } = useDisclosure()
 
-    const handleRegister = ({name,password,email}:RegisterInterface) =>{
+    const handleRegister = ({ name,password,email }:RegisterInterface) =>{
         setLoading(true)
 
-        api.post("/register", { name, email, password })
+        api.post("users", { name, email, password })
          .then((response)=>{
              setLoading(false)
              onModalSuccessOpen()
-         }).catch(()=>{
+         }).catch((err)=>{
+            console.log("catch ", err)
             onModalErrorOpen()
             setLoading(false)
          })
@@ -69,7 +67,7 @@ export const Register = () =>{
             onClick={()=> history.push("/")} 
             secondaryText="Você ja pode começar a fazer suas listas de tarefas agora mesmo"
         /> 
-        <ModalError isOpen={isModalErrorOpen} onClose={onModalErrorClose} error="ops" secondaryText="Você já pode tentar novamente,clicandono botão acima ou aguarde alguns minutos"/>
+        <ModalError isOpen={isModalErrorOpen} onClose={onModalErrorClose} error="ops" secondaryText="Você já pode tentar novamente,clicando no botão acima ou aguarde alguns minutos"/>
         <Flex 
             padding = { ["10px 15px", "10px 15px", "0px", "0px"] }
             alignItems="center"

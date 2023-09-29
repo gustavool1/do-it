@@ -2,10 +2,10 @@ import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButto
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from 'yup'
 import { useForm } from "react-hook-form"
-import { FaClipboard, FaExclamation } from "react-icons/fa"
+import { FaClipboard } from "react-icons/fa"
 import { theme } from "../../styles/theme"
 import { Input } from "../Form/Input"
-import { TextArea, TextAreaBase } from "../Form/TextArea"
+import { TextArea } from "../Form/TextArea"
 import { useContext } from "react"
 import { TaskContext } from "../../providers/Tasks"
 import { AuthContext } from "../../providers/Auth"

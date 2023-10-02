@@ -1,5 +1,5 @@
 import { useDisclosure } from "@chakra-ui/react"
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { ModalTaskDetail } from "../../components/Modal/ModalTaskDetail"
 import { AuthContext } from "../../providers/Auth"
 import { TaskContext } from "../../providers/Tasks"
@@ -17,6 +17,7 @@ interface Task{
 }
 
 export const Dashboard = () => {
+
     const [ loading, setLoading ] = useState(true)
     const [actualTask, setActualTask ] = useState<Task>({} as Task)
 
@@ -35,20 +36,21 @@ export const Dashboard = () => {
         onTaskDetailOpen()
     }
 
-
-    useEffect(()=>{
-        if(tasks.length === 0){
-            getTasks(user.id, acessToken)
+ 
+    const fetchData = useCallback(async () => {
+        if (tasks.length === 0 && loading) {
+            await getTasks(user.id, acessToken)
+                setLoading(false)
         }
-        if(tasks.length !== 0 ){
-            setLoading(false)
-        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [] )
 
-        console.log('a')
-    },[tasks])
+    useEffect( () => {
+        fetchData();
+    },[fetchData])
 
 
-    if(notFound){
+    if (notFound) {
         return(
            <NotFound isTaskDetailOpen={isTaskDetailOpen}  onTaskDetailClose={onTaskDetailClose} actualTask={actualTask}/>
         )

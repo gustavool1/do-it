@@ -1,4 +1,4 @@
-import { createContext, ReactChild, ReactNode, useCallback, useState } from "react";
+import { createContext, ReactNode, useCallback, useState } from "react";
 import { api } from "../../services/api";
 
 
@@ -18,7 +18,7 @@ interface TaskProviderProps{
 interface TaskContextData{
     tasks: Tasks[],
     createTask: (data:Omit<Tasks, "id">, acessToken:string) => Promise<void>,
-    getTasks: (id:string, acessToken:string) => void,
+    getTasks: (id:string, acessToken:string) => Promise<void>,
     deleteTask: (taskId:string, acessToken:string) =>Promise<void>, 
     updateTask: (taskId:string, userId:string, acessToken:string) => Promise<void>,
     searchTask:(title:string, acessToken:string) => Promise<void>,
@@ -34,14 +34,14 @@ export const TaskProvider = ({ children }:TaskProviderProps ) =>{
     const [ tasks, setTasks ] = useState<Tasks[]>([])
     const [ notFound, setNotFound ] = useState(false)
     const [ taskNotFound, setTaskNotFound ] = useState('')
-    const getTasks = (id:string, acessToken:string) =>{
-        api.get(`/tasks?userId=${id}`, {
+    
+    const getTasks = async (id:string, acessToken:string) => {
+         const response = await api.get(`/tasks?userId=${id}`, {
             headers:{
                 Authorization:`Bearer ${acessToken}`
             }
         })
-         .then((response)=>setTasks([...response.data]))
-          .catch(err => console.log(err))
+        setTasks([...response.data]);
     }
 
 
@@ -77,7 +77,7 @@ export const TaskProvider = ({ children }:TaskProviderProps ) =>{
         }).then((response)=>{
             const filteredTasks = tasks.filter((task) => task.id !== taskId)
             const task = tasks.find(task => task.id === taskId)
-            if(task){
+            if (task) {
               task.completed = true 
               setTasks([...filteredTasks, task])  
             }

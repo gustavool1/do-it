@@ -52,9 +52,14 @@ const AuthProvider = ({ children } : AuthProviderProps) =>{
 
     
     const signIn = useCallback( async ({ email, password }: SignIn) =>{
-        const response = await api.post('/login', { email, password })
+        const response = await api.post('/users/signIn', { email, password })
 
-        const { accessToken , user } = response.data
+        const { accessToken  } = response.data
+        const user = {
+            id: response.data.id,
+            name: response.data.name,
+            email,
+        }
 
         localStorage.setItem("@Doit:accessToken", accessToken)
         localStorage.setItem("@Doit:user", JSON.stringify(user))

@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL:"https://doit-port.herokuapp.com/",
+    baseURL:"http://localhost:3001/",
 })

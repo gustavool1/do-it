@@ -1,5 +1,4 @@
 import { Box, Grid } from "@chakra-ui/react"
-import {  useState } from "react"
 import { Card } from "../../components/Card"
 import { SearchBox } from "../../components/Form/SearchBox"
 import { Header } from "../../components/Header"

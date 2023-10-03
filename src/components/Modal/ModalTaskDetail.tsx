@@ -35,7 +35,7 @@ export const ModalTaskDetail = ({ isOpen, onClose, task}:ModalTaskDetailProps) =
     return(
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-                <ModalContent padding="2" bg="white" color="gray.800" >
+                <ModalContent padding="2" bg="white" color="gray.800" width="80%" maxWidth="380px" >
                     <ModalHeader display="flex" justifyContent="space-between">
                         <Flex >
                             <Center mr="2" bg="purple.500" w="30px" h="30px" borderRadius="5px">

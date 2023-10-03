@@ -62,6 +62,10 @@ git clone https://github.com/gustavool1/do-it-api.git backend
 
 # Entre na raiz do diretório
 cd backend
+Preencher .env, tome como base o .env.example
+
+# Instalar dependências do projeto
+yarn
 
 # Criar o container docker 
 sudo docker build -t do-it-api .

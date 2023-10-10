@@ -60,13 +60,15 @@ Pronto, agora o projeto já está rodando na porta 3000 !
 # Clone o repositório
 git clone https://github.com/gustavool1/do-it-api.git backend
 
-
-
 # Entre na raiz do diretório
 cd backend
+Preencher .env, tome como base o .env.example
+
+# Instalar dependências do projeto
+yarn
 
 # Criar o container docker 
-sudo docker build -t do-it
+sudo docker build -t do-it-api .
 
 # Rodar o docker compose 
 sudo docker-compose up
